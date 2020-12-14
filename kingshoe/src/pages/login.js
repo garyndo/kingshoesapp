@@ -34,6 +34,7 @@ class Login extends React.Component {
                 if (res.data.length === 0) return alert('invalid username or pass')
 
                 this.props.login(res.data[0])
+                localStorage.username = username
             })
             .catch((err) => console.log(err))
     }
