@@ -7,8 +7,8 @@ import {
     Button
 } from 'react-bootstrap'
 
+import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-
 import { login } from '../action'
 
 class Login extends React.Component {
@@ -76,6 +76,7 @@ class Login extends React.Component {
                             />
                         </InputGroup>
                         <Button onClick={this.handleLogin} style={{ margin: '0px 100px' }} variant="dark">Submit</Button>{' '}
+                        <p style={{ margin:'20px 0px'}}>Do you have an account? <Link to='/register'>Register Here</Link> </p>
                     </div>
                 </div>
             </div>
