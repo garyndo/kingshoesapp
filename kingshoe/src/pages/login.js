@@ -1,17 +1,44 @@
 import React from 'react'
+import Axios from 'axios'
+
 import {
     InputGroup,
-    FormControl
+    FormControl,
+    Button
 } from 'react-bootstrap'
 
+import { connect } from 'react-redux'
+
+import { login } from '../action'
+
 class Login extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
+            users: [],
             visible: false
         }
     }
+
+    handleLogin = () => {
+        let username = this.refs.username.value
+        let password = this.refs.password.value
+        console.log(username, password)
+
+        if (!username || !password) return alert('input tidak boleh kosong')
+
+        Axios.get(`http://localhost:2000/users?username=${username}&password=${password}`)
+            .then((res) => {
+                console.log(res.data)
+
+                if (res.data.length === 0) return alert('invalid username or pass')
+
+                this.props.login(res.data[0])
+            })
+            .catch((err) => console.log(err))
+    }
     render() {
+        console.log(this.state.users)
         const { visible } = this.state
         return (
             <div style={styles.container}>
@@ -30,21 +57,24 @@ class Login extends React.Component {
                                 placeholder="Username"
                                 aria-label="Username"
                                 aria-describedby="basic-addon1"
+                                ref="username"
                             />
                         </InputGroup>
                         <InputGroup className="mb-3">
-                            <InputGroup.Prepend style={{cursor:'pointer', width:'40px'}} onClick={() => this.setState({ visible: !visible })}>
+                            <InputGroup.Prepend style={{ cursor: 'pointer', width: '40px' }} onClick={() => this.setState({ visible: !visible })}>
                                 <InputGroup.Text id="basic-addon1">
-                                    {visible ? <i className="fas fa-eye-slash"></i> : <i className="fas fa-eye"></i> } 
+                                    {visible ? <i className="fas fa-eye-slash"></i> : <i className="fas fa-eye"></i>}
                                 </InputGroup.Text>
                             </InputGroup.Prepend>
                             <FormControl
-                                placeholder="Password" 
+                                placeholder="Password"
                                 aria-label="Password"
                                 aria-describedby="basic-addon1"
                                 type={visible ? "text" : "password"}
+                                ref="password"
                             />
                         </InputGroup>
+                        <Button onClick={this.handleLogin} style={{ margin: '0px 100px' }} variant="dark">Submit</Button>{' '}
                     </div>
                 </div>
             </div>
@@ -70,4 +100,4 @@ const styles = {
     }
 }
 
-export default Login 
+export default connect(null, { login })(Login)
