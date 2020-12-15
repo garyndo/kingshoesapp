@@ -7,6 +7,7 @@ import Navigation from './componetns/navigation'
 import Home from './pages/home'
 import Login from './pages/login'
 import Register from './pages/register'
+import DetailProduct from './pages/detailProduct'
 
 import { login } from './action'
 
@@ -24,6 +25,7 @@ class App extends React.Component {
                     <Route path='/' component={Home} exact />
                     <Route path='/login' component={Login} />
                     <Route path='/register' component={Register} />
+                    <Route path='/detail' component={DetailProduct} />
                 </Switch>
             </div>
         )

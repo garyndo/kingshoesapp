@@ -1,9 +1,16 @@
 import React from 'react'
 
-class Home extends React.Component{
-    render(){
-        return(
-            <h1>ini Home</h1>
+import CarouselComp from '../componetns/carousel'
+import Products from '../componetns/product'
+
+
+class Home extends React.Component {
+    render() {
+        return (
+            <div>
+                <CarouselComp/>
+                <Products/>
+            </div>
         )
     }
 }
