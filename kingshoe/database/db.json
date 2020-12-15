@@ -520,14 +520,16 @@
       "username": "user",
       "password": "user",
       "role": "user",
-      "email": "user@gmail.com"
+      "email": "user@gmail.com",
+      "cart": []
     },
     {
       "username": "garyndo",
       "password": "garyn1!",
       "role": "user",
       "email": "garyn@gmail.com",
-      "id": 3
+      "id": 3,
+      "cart":[]
     }
   ]
 }
