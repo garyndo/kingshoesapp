@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Nav, Navbar, Dropdown, NavDropdown } from 'react-bootstrap'
+import { Nav, Navbar, Dropdown } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { LOGO } from '../assets'
 import { logout } from '../action'

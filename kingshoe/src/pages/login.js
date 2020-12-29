@@ -4,7 +4,8 @@ import Axios from 'axios'
 import {
     InputGroup,
     FormControl,
-    Button
+    Button,
+    Modal
 } from 'react-bootstrap'
 
 import { Link, Redirect } from 'react-router-dom'
@@ -16,7 +17,8 @@ class Login extends React.Component {
         super(props)
         this.state = {
             users: [],
-            visible: false
+            visible: false, 
+            loginError: [false, ""]
         }
     }
 
@@ -25,7 +27,7 @@ class Login extends React.Component {
         let password = this.refs.password.value
         console.log(username, password)
 
-        if (!username || !password) return alert('input tidak boleh kosong')
+        if (!username || !password) return this.setState({ loginError: [true, "Please Input All Form"] })
 
         Axios.get(`http://localhost:2000/users?username=${username}&password=${password}`)
             .then((res) => {
@@ -33,14 +35,16 @@ class Login extends React.Component {
 
                 if (res.data.length === 0) return alert('invalid username or pass')
 
-                this.props.login(res.data[0])
                 localStorage.username = username
+                this.props.login(res.data[0])
+                this.setState({loginError:[false,""]});
             })
             .catch((err) => console.log(err))
     }
     render() {
-        console.log(this.state.users)
-        const { visible } = this.state
+        // console.log(this.state.users)
+        if (this.props.username) return <Redirect to="/"/>
+        const { visible, loginError } = this.state
         return (
             <div style={styles.container}>
                 <div style={styles.center}>
@@ -79,6 +83,21 @@ class Login extends React.Component {
                         <p style={{ margin:'20px 0px'}}>Do you have an account? <Link to='/register'>Register Here</Link> </p>
                     </div>
                 </div>
+                <Modal show={loginError[0]} onHide={() => this.setState({ loginError: [false, ""] })}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Error</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        <p>{loginError[1]}</p>
+                    </Modal.Body>
+
+                    <Modal.Footer>
+                        <Button variant="primary" onClick={() => this.setState({ loginError: [false, ""] })}>
+                            Okay
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         )
     }
@@ -102,4 +121,10 @@ const styles = {
     }
 }
 
-export default connect(null, { login })(Login)
+const mapStateToProps = (state) => {
+    return {
+        username: state.user.username
+    }
+}
+
+export default connect(mapStateToProps, { login })(Login)

@@ -16,11 +16,12 @@ class DetailProduct extends React.Component {
             data: {},
             image: '',
             selectedSize: null,
-            size: null,
+            size: 0,
             stock: '',
             total: 0,
             toLogin: false,
-            cartErr: false
+            cartErr: false,
+            toCart: false
         }
     }
 
@@ -34,19 +35,44 @@ class DetailProduct extends React.Component {
     }
 
     handleAddToCart = () => {
-        const { total, size } = this.setState
-        if (!this.props.username) return this.setState({ toLogin: true })
+        const { total, size, data } = this.state
+        if (!this.props.id) return this.setState({ toLogin: true })
 
-        if ( total === 0 || size === null) return this.setState({ cartErr: true })
-        // console.log('berhasil')
-        Axios.patch('http://localhost:2000/users')
+        // check user input
+        if (total === 0 || size === 0) return this.setState({ cartErr: true })
+
+        let cartData = {
+            name: data.name,
+            image: data.images[1],
+            category: data.category,
+            brand: data.brand,
+            colour: data.colour,
+            price: data.price,
+            size: size,
+            qty: total,
+            total: total * data.price
+        }
+        // console.log(cartData)
+        let tempCart = this.props.cart
+        tempCart.push(cartData)
+        // console.log(tempCart)
+
+        Axios.patch(`http://localhost:2000/users/${this.props.id}`, {cart: tempCart})
+            .then((res) => {
+                console.log(res.data)
+                this.setState({ toCart: true})
+            })
+            .catch((err) => console.log(err))
     }
 
     render() {
-        const { data, image, selectedSize, total, stock, toLogin, cartErr } = this.state
+        const { data, image, selectedSize, total, stock, toLogin, cartErr, toCart } = this.state
 
         if (toLogin) return <Redirect to='/login' />
-        // console.log(this.state.data)
+
+        if(toCart) return <Redirect to='/cart' />
+
+        // console.log(this.props.id)
         return (
             <div style={{ marginTop: '70px', padding: '0 20px' }}>
                 <h1>Product Detail</h1>
@@ -73,19 +99,18 @@ class DetailProduct extends React.Component {
                                                     onClick={() => this.setState({ size: item.code, selectedSize: index, stock: item.total })}
                                                     style={{
                                                         backgroundColor: selectedSize === index ? '#130f40' : '#ffffff',
-                                                        color: selectedSize === index ? 'white' : 'black',
-                                                    }}
-                                                >
+                                                        color: selectedSize === index ? 'white' : 'black'
+                                                    }}>
                                                     {item.code}
                                                 </Button>
                                             )
                                         })}
                                     </div>
-                                    <h5>*stock = {stock} </h5>
+                                    <h5>*Stock = {stock}</h5>
                                 </div>
-                                <div style={{ width: '15%' }}>
+                                <div style={{ width: '20%' }}>
                                     <h5>Quantity: </h5>
-                                    <div style={{ display: 'flex', backgroundColor: 'white', borderRadius: '10px', justifyContent: 'space-between' }}>
+                                    <div style={{ display: 'flex', backgroundColor: 'white', justifyContent: 'space-between', borderRadius: '5px' }}>
                                         <Button
                                             disabled={total <= 0 ? true : false}
                                             variant="danger"
@@ -110,7 +135,7 @@ class DetailProduct extends React.Component {
                     <Modal.Header closeButton>
                         <Modal.Title>Error</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>please input size and quantity product!</Modal.Body>
+                    <Modal.Body>Please choose one of size and quantity!</Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={() => this.setState({ cartErr: false })}>
                             Close
@@ -152,48 +177,9 @@ const styles = {
 
 const mapStateToProps = (state) => {
     return {
-        username: state.user.username
+        id: state.user.id,
+        cart: state.user.cart
     }
 }
 
 export default connect(mapStateToProps)(DetailProduct)
-
-
-/* <div style={styles.adjust}>
-                                <div style={{ marginRight: '50px' }}>
-                                    <h5>Size : </h5>
-                                    <div>
-                                        {
-                                            (data.stock ? data.stock : []).map((item, index) => {
-                                                return <Button
-                                                    key={index}
-                                                    variant='outlined'
-                                                    onClick={() => this.setState({ stock: item.total, selectedSize: index, size: item.code })}
-                                                    style={{
-                                                        backgroundColor: selectedSize === index ? '#130f40' : '#ffffff',
-                                                        color: selectedSize === index ? 'white' : 'black',
-                                                        border: '1px #130f40 solid'
-                                                    }}
-                                                >{item.code}</Button>
-                                            })
-                                        }
-                                    </div>
-                                    <h5>{stock ? `* stock = ${stock}` : ''}</h5>
-                                </div>
-                                <div style={{ width: '20%' }}>
-                                    <h5>Total: </h5>
-                                    <div style={{ display: 'flex', borderRadius: '5px', backgroundColor: '#ffffff', justifyContent: 'space-between' }}>
-                                        <Button
-                                            disabled={total <= 0 ? true : false}
-                                            onClick={() => this.setState({ total: total - 1 })}
-                                            variant="danger"
-                                        >-</Button>
-                                        <h1>{total}</h1>
-                                        <Button
-                                            disabled={total >= stock ? true : false}
-                                            onClick={() => this.setState({ total: total + 1 })}
-                                            variant="primary"
-                                        >+</Button>
-                                    </div>
-                                </div>
-                            </div> */

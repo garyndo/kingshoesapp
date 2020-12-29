@@ -1,5 +1,6 @@
 import React from 'react'
 import Axios from 'axios'
+
 import { Button, InputGroup, Form, FormControl, Modal } from 'react-bootstrap'
 
 const URL = 'http://localhost:2000/users'
@@ -30,7 +31,7 @@ class Register extends React.Component {
         if (confpassword !== password) return this.setState({ regError: [true, "Password doesn't match with Confirm Password"] })
 
         if (userValidErr[0] || emailValidErr[0] || passValidErr[0]) return this.setState({ regError: [true, "Make sure there is no error in validation"] })
-    
+
         // console.log({
         //     username: username,
         //     password: password,
@@ -55,7 +56,8 @@ class Register extends React.Component {
                             username: username,
                             password: password,
                             role: "user",
-                            email: email
+                            email: email,
+                            cart: []
                         })
                             .then((res) => {
                                 console.log(res.data)
@@ -67,7 +69,7 @@ class Register extends React.Component {
                     .catch((err) => console.log(err))
             })
             .catch((err) => console.log(err))
-    
+
     }
 
     userValid = (e) => {
@@ -75,7 +77,7 @@ class Register extends React.Component {
         // console.log(username)
         let symb = /[!@#$%^&*;]/
 
-        if (symb.test(username) || username.length < 6) return this.setState({ userValidErr: [true, "*can\'t include symb and min 6 char"] })
+        if (symb.test(username) || username.length < 6) return this.setState({ userValidErr: [true, "*cant include symb and min 6 char"] })
 
         this.setState({ userValidErr: [false, ""] })
     }
