@@ -25,7 +25,6 @@ class Register extends React.Component {
         let password = this.refs.password.value
         let confpassword = this.refs.confpassword.value
         // console.log(username, email, password, confpassword)
-
         if (!username || !email || !password || !confpassword) return this.setState({ regError: [true, "please input all form"] })
 
         if (confpassword !== password) return this.setState({ regError: [true, "Password doesn't match with Confirm Password"] })
@@ -109,7 +108,7 @@ class Register extends React.Component {
             <div style={styles.container}>
                 <div style={styles.center}>
                     <div>
-                        <h1>REGISTIR NICH</h1>
+                        <h1>REGISTER</h1>
                     </div>
                     <div style={{ ...styles.item, textAlign: 'center' }}>
                         <InputGroup>

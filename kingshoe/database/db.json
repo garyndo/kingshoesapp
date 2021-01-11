@@ -529,7 +529,37 @@
       "role": "user",
       "email": "garyn@gmail.com",
       "id": 3,
-      "cart":[]
+      "cart": []
+    },
+    {
+      "username": "desihapsari",
+      "password": "desi123!",
+      "role": "user",
+      "email": "desi@gmail.com",
+      "cart": [
+        {},
+        {
+          "name": "JORDAN WESTBROOK ONE TAKE",
+          "image": "https://kickz.akamaized.net/en/media/images/p/1200/JORDAN_WESTBROOK_ONE_TAKE-WHITE_WHITE_BLACK_RAGE_GREEN-2.jpg",
+          "category": "Men, Sport, Sneaker",
+          "brand": "JORDAN",
+          "colour": "WHITE/WHITE-BLACK-RAGE GREEN",
+          "price": 1500000,
+          "size": 38,
+          "total": 3000000
+        },
+        {
+          "name": "JORDAN WESTBROOK ONE TAKE",
+          "image": "https://kickz.akamaized.net/en/media/images/p/1200/JORDAN_WESTBROOK_ONE_TAKE-WHITE_WHITE_BLACK_RAGE_GREEN-2.jpg",
+          "category": "Men, Sport, Sneaker",
+          "brand": "JORDAN",
+          "colour": "WHITE/WHITE-BLACK-RAGE GREEN",
+          "price": 1500000,
+          "size": 39,
+          "total": 4500000
+        }
+      ],
+      "id": 4
     }
   ]
 }
