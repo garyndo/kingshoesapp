@@ -8,6 +8,7 @@ import Home from './pages/home'
 import Login from './pages/login'
 import Register from './pages/register'
 import DetailProduct from './pages/detailProduct'
+import CartPage from './pages/cartPage'
 
 import { login } from './action'
 
@@ -26,6 +27,7 @@ class App extends React.Component {
                     <Route path='/login' component={Login} />
                     <Route path='/register' component={Register} />
                     <Route path='/detail' component={DetailProduct} />
+                    <Route path='/cartpage' component={CartPage}/>
                 </Switch>
             </div>
         )

@@ -20,7 +20,8 @@ class DetailProduct extends React.Component {
             stock: '',
             total: 0,
             toLogin: false,
-            cartErr: false
+            cartErr: false,
+            toCart: false
         }
     }
 
@@ -35,9 +36,9 @@ class DetailProduct extends React.Component {
 
     handleAddToCart = () => {
         const { total, size, data } = this.state
-        if (!this.props.id) return this.setState({ toLogin: true })         
+        if (!this.props.id) return this.setState({ toLogin: true })
         //proteksi klo size blm d pilih, dan total prodiuk yg d pilih masih 0
-        if ( total === 0 || size === null) return this.setState({ cartErr: true })
+        if (total === 0 || size === null) return this.setState({ cartErr: true })
         //dataproduk d defined atau bentuk lebih dulu
         let cartData = {
             name: data.name,
@@ -51,7 +52,8 @@ class DetailProduct extends React.Component {
         }
         console.log(cartData) // cek ud ke ambil blm datanya 
 
-        //ambil data cart dariredux PROSES REDUX NI BOY
+        //PROSES REDUX NI BOY
+        //ambil data cart dariredux 
         let tempCart = this.props.cart
         console.log(tempCart) // cek dapet ga nih data dari redux yg d ambil dr db berupa array kosong boy
         tempCart.push(cartData) //push data inputan dr user k array kosongnya
@@ -59,21 +61,23 @@ class DetailProduct extends React.Component {
 
         //memasukan data belanja kita menggunakan patch
         //bukan post, karna sudah ada cart d dlm db user berupa array tinggal kita isi dh
-        Axios.patch(`http://localhost:2000/users/${this.props.id}`,{ //pilih user sesuaiid yg sedang aktif, PROSES PGRIMIN DATA
+        Axios.patch(`http://localhost:2000/users/${this.props.id}`, { //pilih user sesuai id yg sedang aktif, PROSES PGRIMIN DATA
             cart: tempCart    // proses mengisi cart db yg kosong dengan objek yg user pilih yg sudah berbentuk tempcart                
-        }) 
-        .then((res)=>{
-            console.log(res.data)
         })
-        .catch((err)=>console.log(err))
+            .then((res) => {
+                console.log(res.data)
+                this.setState({ toCart: true })
+            })
+            .catch((err) => console.log(err))
         //proses patch dsnii mengganti atau mengisi data yg ada d cart user yg seblumny kosong mnjadi data yg baru setelahuser input blanjaan yg d inginkan boy
     }
 
     render() {
-        const { data, image, selectedSize, total, stock, toLogin, cartErr } = this.state
+        const { data, image, selectedSize, total, stock, toLogin, cartErr, toCart } = this.state
 
         if (toLogin) return <Redirect to='/login' />
         // console.log(this.props.id)
+        if (toCart) return <Redirect to='/cartpage'/>
         return (
             <div style={{ marginTop: '70px', padding: '0 20px' }}>
                 <h1>Product Detail</h1>
