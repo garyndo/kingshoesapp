@@ -537,36 +537,16 @@
       "role": "user",
       "email": "desi@gmail.com",
       "cart": [
-        {},
         {
-          "name": "JORDAN WESTBROOK ONE TAKE",
-          "image": "https://kickz.akamaized.net/en/media/images/p/1200/JORDAN_WESTBROOK_ONE_TAKE-WHITE_WHITE_BLACK_RAGE_GREEN-2.jpg",
+          "name": "JORDAN AIR JORDAN 14 RETRO",
+          "image": "https://kickz.akamaized.net/en/media/images/p/1200/Air_Jordan_14_Retro-BLACK_GYM_RED_WHITE_OFF_WHITE-2.jpg",
           "category": "Men, Sport, Sneaker",
           "brand": "JORDAN",
-          "colour": "WHITE/WHITE-BLACK-RAGE GREEN",
-          "price": 1500000,
-          "size": 38,
-          "total": 3000000
-        },
-        {
-          "name": "JORDAN WESTBROOK ONE TAKE",
-          "image": "https://kickz.akamaized.net/en/media/images/p/1200/JORDAN_WESTBROOK_ONE_TAKE-WHITE_WHITE_BLACK_RAGE_GREEN-2.jpg",
-          "category": "Men, Sport, Sneaker",
-          "brand": "JORDAN",
-          "colour": "WHITE/WHITE-BLACK-RAGE GREEN",
-          "price": 1500000,
-          "size": 39,
-          "total": 4500000
-        },
-        {
-          "name": "NIKE W NIKE REACT ELEMENT 55",
-          "image": "https://kickz.akamaized.net/en/media/images/p/1200/W_NIKE_REACT_ELEMENT_55-WHITE_FIRE_PINK_SAPPHIRE_BARELY_VOLT-2.jpg",
-          "category": "Women, Sport, Sneaker",
-          "brand": "NIKE",
-          "colour": "WHITE/FIRE PINK-SAPPHIRE-BARELY VOLT",
-          "price": 2345000,
-          "size": 38,
-          "total": 2345000
+          "colour": "BLACK/GYM RED-WHITE-OFF WHITE",
+          "price": 2680000,
+          "size": 41,
+          "qty": 2,
+          "total": 5360000
         }
       ],
       "id": 4

@@ -18,7 +18,7 @@ class DetailProduct extends React.Component {
             selectedSize: null,
             size: null,
             stock: '',
-            total: 0,
+            total: 0, 
             toLogin: false,
             cartErr: false,
             toCart: false
@@ -48,6 +48,7 @@ class DetailProduct extends React.Component {
             colour: data.colour,
             price: data.price,
             size: size,  //size dari local state yg sudah d pilih oleh user
+            qty: total,
             total: total * data.price // total harga produk yg sudah d pilih sm user
         }
         console.log(cartData) // cek ud ke ambil blm datanya 

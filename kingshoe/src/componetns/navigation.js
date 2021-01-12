@@ -24,6 +24,9 @@ class Navigation extends React.Component {
                             <strong>Home</strong>
                         </Nav.Link>
                     </Nav>
+                    <Link to='./cartpage'>
+                    <i style={{ marginRight: '40px', color: 'white', fontSize:'20px'}} className="fas fa-shopping-cart"></i>
+                    </Link>
                     <Dropdown>
                         <Dropdown.Toggle variant="secondary" id="dropdown-basic">
                             {this.props.username ? this.props.username : 'username'}
