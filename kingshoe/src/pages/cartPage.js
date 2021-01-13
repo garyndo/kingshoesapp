@@ -2,11 +2,18 @@ import React from 'react'
 import Axios from 'axios'
 import { connect } from 'react-redux'
 // import { Link, Redirect } from 'react-router-dom'
-import { Table, Button, Image } from 'react-bootstrap'
+import { Table, Button, Image, Form } from 'react-bootstrap'
 
 import { login } from '../action'
 
 class Cartpage extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            selectedIndex: null,
+            newQty: 0
+        }
+    }
     handleDelete = (index) => {
         // console.log(index) => untuk cek index ke brapa terpilih ketika kita pencet del
         // kita pake axios.patch, karena kita akan ganti data lama dengan data baru, 
@@ -22,11 +29,15 @@ class Cartpage extends React.Component {
                 console.log(res.data)
                 Axios.get(`http://localhost:2000/users/${this.props.id}`) // agar otomatis k delete, tidak perlu d refresh/d reload
                     .then((res) => this.props.login(res.data))
-                    .catch((err)=>console.log(err)) 
+                    .catch((err) => console.log(err))
             })
             .catch((err) => console.log(err))
 
     }
+    handleDone = () => {
+        console.log('handleDone berhasil')
+    }
+
 
     renderTHead = () => {
         return (
@@ -48,6 +59,29 @@ class Cartpage extends React.Component {
         return (
             <tbody>
                 {this.props.cart.map((item, index) => { //menggunakan maping untuk memanggil data yg ada ddlmcart user yg sudah memilih
+                    if (this.state.selectedIndex === index) {
+                        return (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{item.name}</td>
+                                <td>
+                                    <Image style={{ width: 100, height: 100 }} src={item.image} rounded />
+                                </td>
+                                <td>{item.size}</td>
+                                <td>{item.price}</td>
+                                <td style={{ display: 'flex' }}>
+                                    <Button>-</Button>
+                                    <Form.Control style={{width:'50px'}} placeholder={this.state.newQty} />
+                                    <Button>+</Button>
+                                </td>
+                                <td>{item.total}</td>
+                                <td>
+                                    <Button onClick={this.handleDone} variant='success'>Done</Button>
+                                    <Button onClick={() => this.setState({ selectedIndex: null })} variant='info'>Cancel</Button>
+                                </td>
+                            </tr>
+                        )
+                    }
                     return (
                         <tr key={index}>
                             <td>{index + 1}</td>
@@ -60,7 +94,7 @@ class Cartpage extends React.Component {
                             <td>{item.qty}</td>
                             <td>{item.total}</td>
                             <td>
-                                <Button variant='warning'>Edit</Button>
+                                <Button onClick={() => this.setState({ selectedIndex: index, newQty: item.qty })} variant='warning'>Edit</Button>
                                 <Button onClick={() => this.handleDelete(index)} variant='danger'>Delete</Button>
                             </td>
                         </tr>
@@ -71,6 +105,7 @@ class Cartpage extends React.Component {
     }
     render() {
         console.log(this.props.cart) //caramanggil redux,dan kita liat dapet ga datanya, make sure datanya terpanggil
+        console.log(this.state.selectedIndex)
         return (
             <div style={{ padding: '0 20px' }}>
                 <h1>Welcome to Your Cart Page </h1>

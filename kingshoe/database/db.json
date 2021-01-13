@@ -547,6 +547,17 @@
           "size": 41,
           "qty": 2,
           "total": 5360000
+        },
+        {
+          "name": "NIKE AIR ZOOM-TYPE",
+          "image": "https://kickz.akamaized.net/en/media/images/p/1200/nike-AIR_ZOOM_TYPE-BLACK_SUMMIT_WHITE_MENTA_ORANGE_TRANCE-2.jpg",
+          "category": "Men, Sport, Sneaker",
+          "brand": "NIKE",
+          "colour": "BLACK/SUMMIT WHITE-MENTA-ORANGE TRANCE",
+          "price": 2500000,
+          "size": 41,
+          "qty": 2,
+          "total": 5000000
         }
       ],
       "id": 4
