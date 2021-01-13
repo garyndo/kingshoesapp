@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
     id: '',
     username: '',
+    password: '',
     email: '',
     role: '',
     cart:[]
@@ -13,6 +14,7 @@ export const userReducer = (state = INITIAL_STATE, action) =>{
                 ...state,
                 id : action.payload.id,
                 username : action.payload.username,
+                password : action.payload.password,
                 role : action.payload.role,
                 email : action.payload.email,
                 cart : action.payload.cart

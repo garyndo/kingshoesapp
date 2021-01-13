@@ -558,6 +558,17 @@
           "size": 41,
           "qty": 2,
           "total": 5000000
+        },
+        {
+          "name": "NIKE KYRIE 6",
+          "image": "https://kickz.akamaized.net/en/media/images/p/1200/nike-KYRIE_6-WHITE_BLUE_FURY_OPTI_YELLOW_DIGITAL_PINK-2.jpg",
+          "category": "Men, Sport, Sneaker",
+          "brand": "NIKE",
+          "colour": "WHITE/BLUE FURY-OPTI YELLOW-DIGITAL PINK",
+          "price": 1780000,
+          "size": 41,
+          "qty": 1,
+          "total": 1780000
         }
       ],
       "id": 4
