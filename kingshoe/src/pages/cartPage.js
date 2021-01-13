@@ -1,6 +1,7 @@
 import React from 'react'
 import Axios from 'axios'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 // import { Link, Redirect } from 'react-router-dom'
 import { Table, Button, Image, Form } from 'react-bootstrap'
 
@@ -144,6 +145,7 @@ class Cartpage extends React.Component {
         )
     }
     render() {
+        if(!this.props.id) return <Redirect to='/login'/>
         // console.log(this.props.cart) //caramanggil redux,dan kita liat dapet ga datanya, make sure datanya terpanggil
         // console.log(this.state.selectedIndex)
         return (
