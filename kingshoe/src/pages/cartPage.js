@@ -14,9 +14,11 @@ class Cartpage extends React.Component {
             selectedIndex: null,
             newQty: 0,
             reqPayment: false,
-            total: 0,
             reqPass: false,
-            errPass: false
+            errPass: false,
+            errPayment: false,
+            cartEmpty: false,
+            toHistory: false
         }
     }
     handleDelete = (index) => {
@@ -84,13 +86,57 @@ class Cartpage extends React.Component {
     totalPrice = () => {
         let counter = 0
         this.props.cart.map(item => counter += item.total)
-        console.log(counter)
+        // console.log(counter)
         return counter
     }
+
+    checkOut = () => {
+        //fungsi proteksi cart kosong 
+        if (this.props.cart.length === 0) return this.setState({ cartEmpty: true })
+        this.setState({ reqPass: true })
+    }
+
     confPay = () => {
         let nominal = this.refs.payment.value //nampung inputan dr user
-        console.log(nominal)
-        this.setState({ reqPayment: false }) //modal ketutup
+        // console.log(nominal)
+        let total = this.totalPrice()
+        console.log(total)
+        //buat kondisi inputan nominal user
+        if (nominal < total) return this.setState({ errPayment: true })
+
+        //POST DATA K HISTORY
+        // PERUBAHAN DB/PREPARE DB/SIAPKAN DATA
+        let history = {
+            username: this.props.username,
+            date: new Date().toLocaleString(),
+            total: total,
+            product: this.props.cart
+        }
+        console.log(history)
+
+        //UPDATE DATA HISTORY USER 
+        Axios.post(`http://localhost:2000/history`, history)
+            .then((res) => {
+                console.log(res.data)
+                
+
+                //KOSONGKAN CARTPAGE SETELAH USER SUDAH INPUTPAYMENT dan UPDATE DB
+                Axios.patch(`http://localhost:2000/users/${this.props.id}`, { cart: [] })
+                    .then((res) => {
+                        console.log(res.data)
+
+                        // UPDATE REDUX
+                        Axios.get(`http://localhost:2000/users/${this.props.id}`)
+                            .then((res) => {
+                                console.log(res.data)
+                                this.props.login(res.data)
+                                this.setState({ reqPayment: false, toHistory:true })
+                            })
+                            .catch((err) => console.log(err))
+                    })
+                    .catch((err) => console.log(err))
+            })
+            .catch((err) => console.log(err))
     }
     confPass = () => {
         let pass = this.refs.pass.value
@@ -98,7 +144,7 @@ class Cartpage extends React.Component {
         //if conditional, passnya sama ga/ketika pass tidak sesuai 
         if (pass !== this.props.pass) return this.setState({ errPass: true })
 
-        this.setState({reqPayment:true,reqPass:false})
+        this.setState({ reqPayment: true, reqPass: false })
     }
     renderTHead = () => {
         return (
@@ -165,17 +211,19 @@ class Cartpage extends React.Component {
         )
     }
     render() {
-        const { reqPayment, reqPass, errPass } = this.state
+        const { reqPayment, reqPass, errPass, errPayment, cartEmpty, toHistory } = this.state
+        //redirect ketika user mau blanja tp belum login
         if (!this.props.id) return <Redirect to='/login' />
+        //redirect ke history kalau user berhasil checkout
+        if(toHistory) return <Redirect to='/history'/>
         // console.log(this.props.cart) //caramanggil redux,dan kita liat dapet ga datanya, make sure datanya terpanggil
         // console.log(this.state.selectedIndex)
         return (
-
             <div style={{ padding: '0 20px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <h1>Welcome to Your Cart Page </h1>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <Button onClick={()=> this.setState({ reqPass: true })} variant='success'>CheckOut</Button>
+                        <Button onClick={this.checkOut} variant='success'>CheckOut</Button>
                     </div>
                 </div>
                 <Table striped bordered hover variant="dark">
@@ -183,22 +231,6 @@ class Cartpage extends React.Component {
                     {this.renderTBody()}
                 </Table>
                 <h1>total belanja anda = IDR {(this.totalPrice().toLocaleString())}</h1>
-                <Modal show={reqPayment} onHide={() => this.setState({ reqPayment: false })}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>USER PAYMENT</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form.Control ref='payment' type='number' placeholder='Please input ur money for payment' />
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={() => this.setState({ reqPayment: false })}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={this.confPay}>
-                            Confirm
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
                 <Modal show={reqPass} onHide={() => this.setState({ reqPass: false })}>
                     <Modal.Header closeButton>
                         <Modal.Title>INPUT YOU PASSWORD</Modal.Title>
@@ -228,6 +260,48 @@ class Cartpage extends React.Component {
                         </Button>
                     </Modal.Footer>
                 </Modal>
+                <Modal show={reqPayment} onHide={() => this.setState({ reqPayment: false })}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>USER PAYMENT</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form.Control ref='payment' type='number' placeholder='Please input ur money for payment' />
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => this.setState({ reqPayment: false })}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={this.confPay}>
+                            Confirm
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+                <Modal show={errPayment} onHide={() => this.setState({ errPayment: false })}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>ERROR</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        ur money kurang dari totalprice
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => this.setState({ errPayment: false })}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+                <Modal show={cartEmpty} onHide={() => this.setState({ cartEmpty: false })}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>ERROR</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Make serue ur cart is not empty
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => this.setState({ cartEmpty: false })}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         )
     }
@@ -237,7 +311,8 @@ const mapStateToProps = (state) => {
     return {
         cart: state.user.cart,
         id: state.user.id,
-        pass: state.user.password
+        pass: state.user.password,
+        username: state.user.username
     }
 }
 
