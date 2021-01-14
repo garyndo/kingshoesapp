@@ -1,8 +1,10 @@
 const INITIAL_STATE = {
     id: '',
     username: '',
+    password: '',
     email: '',
-    role: ''
+    role: '',
+    cart:[]
 }
 
 export const userReducer = (state = INITIAL_STATE, action) =>{
@@ -12,8 +14,10 @@ export const userReducer = (state = INITIAL_STATE, action) =>{
                 ...state,
                 id : action.payload.id,
                 username : action.payload.username,
+                password : action.payload.password,
                 role : action.payload.role,
-                email : action.payload.email
+                email : action.payload.email,
+                cart : action.payload.cart
             }
         case 'LOG_OUT':
             return INITIAL_STATE

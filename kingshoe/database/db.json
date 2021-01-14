@@ -529,7 +529,148 @@
       "role": "user",
       "email": "garyn@gmail.com",
       "id": 3,
-      "cart":[]
+      "cart": []
+    },
+    {
+      "username": "desihapsari",
+      "password": "desi123!",
+      "role": "user",
+      "email": "desi@gmail.com",
+      "cart": [],
+      "id": 4
+    },
+    {
+      "username": "desihapsari",
+      "date": "1/14/2021, 5:54:02 PM",
+      "total": 4103786,
+      "product": [
+        {
+          "name": "NIKE KYRIE 6",
+          "image": "https://kickz.akamaized.net/en/media/images/p/1200/nike-KYRIE_6-WHITE_BLUE_FURY_OPTI_YELLOW_DIGITAL_PINK-2.jpg",
+          "category": "Men, Sport, Sneaker",
+          "brand": "NIKE",
+          "colour": "WHITE/BLUE FURY-OPTI YELLOW-DIGITAL PINK",
+          "price": 1780000,
+          "size": 39,
+          "qty": 2,
+          "total": 3560000
+        },
+        {
+          "name": "VANS UA CLASSIC SLIP-ON (BREAST CANCER)",
+          "image": "https://kickz.akamaized.net/en/media/images/p/1200/vans-UA_Classic_Slip_On_Breast_Cancer-Breast_Cancer_nude_check_true_white-2.jpg",
+          "category": "Women, Converse",
+          "brand": "VANS",
+          "colour": "cadmium yellow/tidepool",
+          "price": 543786,
+          "size": 38,
+          "qty": 1,
+          "total": 543786
+        }
+      ],
+      "id": 5
+    }
+  ],
+  "history": [
+    {
+      "username": "desihapsari",
+      "date": "1/14/2021, 5:55:28 PM",
+      "total": 4103786,
+      "product": [
+        {
+          "name": "NIKE KYRIE 6",
+          "image": "https://kickz.akamaized.net/en/media/images/p/1200/nike-KYRIE_6-WHITE_BLUE_FURY_OPTI_YELLOW_DIGITAL_PINK-2.jpg",
+          "category": "Men, Sport, Sneaker",
+          "brand": "NIKE",
+          "colour": "WHITE/BLUE FURY-OPTI YELLOW-DIGITAL PINK",
+          "price": 1780000,
+          "size": 39,
+          "qty": 2,
+          "total": 3560000
+        },
+        {
+          "name": "VANS UA CLASSIC SLIP-ON (BREAST CANCER)",
+          "image": "https://kickz.akamaized.net/en/media/images/p/1200/vans-UA_Classic_Slip_On_Breast_Cancer-Breast_Cancer_nude_check_true_white-2.jpg",
+          "category": "Women, Converse",
+          "brand": "VANS",
+          "colour": "cadmium yellow/tidepool",
+          "price": 543786,
+          "size": 38,
+          "qty": 1,
+          "total": 543786
+        }
+      ],
+      "id": 1
+    },
+    {
+      "username": "desihapsari",
+      "date": "1/14/2021, 6:26:48 PM",
+      "total": 4103786,
+      "product": [
+        {
+          "name": "NIKE KYRIE 6",
+          "image": "https://kickz.akamaized.net/en/media/images/p/1200/nike-KYRIE_6-WHITE_BLUE_FURY_OPTI_YELLOW_DIGITAL_PINK-2.jpg",
+          "category": "Men, Sport, Sneaker",
+          "brand": "NIKE",
+          "colour": "WHITE/BLUE FURY-OPTI YELLOW-DIGITAL PINK",
+          "price": 1780000,
+          "size": 39,
+          "qty": 2,
+          "total": 3560000
+        },
+        {
+          "name": "VANS UA CLASSIC SLIP-ON (BREAST CANCER)",
+          "image": "https://kickz.akamaized.net/en/media/images/p/1200/vans-UA_Classic_Slip_On_Breast_Cancer-Breast_Cancer_nude_check_true_white-2.jpg",
+          "category": "Women, Converse",
+          "brand": "VANS",
+          "colour": "cadmium yellow/tidepool",
+          "price": 543786,
+          "size": 38,
+          "qty": 1,
+          "total": 543786
+        }
+      ],
+      "id": 2
+    },
+    {
+      "username": "garyndo",
+      "date": "1/14/2021, 8:29:51 PM",
+      "total": 6680000,
+      "product": [
+        {
+          "name": "JORDAN AIR JORDAN 14 RETRO",
+          "image": "https://kickz.akamaized.net/en/media/images/p/1200/Air_Jordan_14_Retro-BLACK_GYM_RED_WHITE_OFF_WHITE-2.jpg",
+          "category": "Men, Sport, Sneaker",
+          "brand": "JORDAN",
+          "colour": "BLACK/GYM RED-WHITE-OFF WHITE",
+          "price": 2680000,
+          "size": 41,
+          "qty": 1,
+          "total": 2680000
+        },
+        {
+          "name": "NIKE AIR ZOOM-TYPE",
+          "image": "https://kickz.akamaized.net/en/media/images/p/1200/nike-AIR_ZOOM_TYPE-BLACK_SUMMIT_WHITE_MENTA_ORANGE_TRANCE-2.jpg",
+          "category": "Men, Sport, Sneaker",
+          "brand": "NIKE",
+          "colour": "BLACK/SUMMIT WHITE-MENTA-ORANGE TRANCE",
+          "price": 2500000,
+          "size": 42,
+          "qty": 1,
+          "total": 2500000
+        },
+        {
+          "name": "JORDAN WESTBROOK ONE TAKE",
+          "image": "https://kickz.akamaized.net/en/media/images/p/1200/JORDAN_WESTBROOK_ONE_TAKE-WHITE_WHITE_BLACK_RAGE_GREEN-2.jpg",
+          "category": "Men, Sport, Sneaker",
+          "brand": "JORDAN",
+          "colour": "WHITE/WHITE-BLACK-RAGE GREEN",
+          "price": 1500000,
+          "size": 42,
+          "qty": 1,
+          "total": 1500000
+        }
+      ],
+      "id": 3
     }
   ]
 }

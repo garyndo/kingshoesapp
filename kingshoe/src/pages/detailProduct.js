@@ -18,9 +18,10 @@ class DetailProduct extends React.Component {
             selectedSize: null,
             size: null,
             stock: '',
-            total: 0,
+            total: 0, 
             toLogin: false,
-            cartErr: false
+            cartErr: false,
+            toCart: false
         }
     }
 
@@ -34,19 +35,50 @@ class DetailProduct extends React.Component {
     }
 
     handleAddToCart = () => {
-        const { total, size } = this.setState
-        if (!this.props.username) return this.setState({ toLogin: true })
+        const { total, size, data } = this.state
+        if (!this.props.id) return this.setState({ toLogin: true })
+        //proteksi klo size blm d pilih, dan total prodiuk yg d pilih masih 0
+        if (total === 0 || size === null) return this.setState({ cartErr: true })
+        //dataproduk d defined atau bentuk lebih dulu
+        let cartData = {
+            name: data.name,
+            image: data.images[1],
+            category: data.category,
+            brand: data.brand,
+            colour: data.colour,
+            price: data.price,
+            size: size,  //size dari local state yg sudah d pilih oleh user
+            qty: total,
+            total: total * data.price // total harga produk yg sudah d pilih sm user
+        }
+        console.log(cartData) // cek ud ke ambil blm datanya 
 
-        if ( total === 0 || size === null) return this.setState({ cartErr: true })
-        // console.log('berhasil')
-        Axios.patch('http://localhost:2000/users')
+        //PROSES REDUX NI BOY
+        //ambil data cart dariredux 
+        let tempCart = this.props.cart
+        console.log(tempCart) // cek dapet ga nih data dari redux yg d ambil dr db berupa array kosong boy
+        tempCart.push(cartData) //push data inputan dr user k array kosongnya
+        console.log(tempCart) //cek tempcart yg uddi isiinputan array terisi boy
+
+        //memasukan data belanja kita menggunakan patch
+        //bukan post, karna sudah ada cart d dlm db user berupa array tinggal kita isi dh
+        Axios.patch(`http://localhost:2000/users/${this.props.id}`, { //pilih user sesuai id yg sedang aktif, PROSES PGRIMIN DATA
+            cart: tempCart    // proses mengisi cart db yg kosong dengan objek yg user pilih yg sudah berbentuk tempcart                
+        })
+            .then((res) => {
+                console.log(res.data)
+                this.setState({ toCart: true })
+            })
+            .catch((err) => console.log(err))
+        //proses patch dsnii mengganti atau mengisi data yg ada d cart user yg seblumny kosong mnjadi data yg baru setelahuser input blanjaan yg d inginkan boy
     }
 
     render() {
-        const { data, image, selectedSize, total, stock, toLogin, cartErr } = this.state
+        const { data, image, selectedSize, total, stock, toLogin, cartErr, toCart } = this.state
 
         if (toLogin) return <Redirect to='/login' />
-        // console.log(this.state.data)
+        // console.log(this.props.id)
+        if (toCart) return <Redirect to='/cartpage'/>
         return (
             <div style={{ marginTop: '70px', padding: '0 20px' }}>
                 <h1>Product Detail</h1>
@@ -152,7 +184,8 @@ const styles = {
 
 const mapStateToProps = (state) => {
     return {
-        username: state.user.username
+        id: state.user.id,
+        cart: state.user.cart
     }
 }
 
